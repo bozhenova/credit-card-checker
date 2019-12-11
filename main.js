@@ -39,8 +39,16 @@
     mystery5
   ];
 
+  function makeArray(string) {
+    return Array.from(string).map(Number);
+  }
+
   function validateCred(array) {
     let sum = 0;
+    if (!Array.isArray(array)) {
+      //converts a string into an array of numbers
+      array = makeArray(array);
+    }
     for (let i = array.length - 1; i >= 0; i--) {
       let cardNum = array[i];
       if ((array.length - i) % 2 === 0) {
@@ -63,8 +71,6 @@
     }
     return invalidCards;
   }
-
-  let cards = findInvalidCards(batch);
 
   function idInvalidCardCompanies(array) {
     const invalidCardsCompanies = [];
@@ -97,5 +103,7 @@
     return invalidCardsCompanies;
   }
 
+  let cards = findInvalidCards(batch);
+  console.log(cards);
   console.log(idInvalidCardCompanies(cards));
 })();
