@@ -1,4 +1,8 @@
-(function() {
+(function () {
+  "use strict";
+  const form = document.getElementById('creditCardCheckerForm');
+  const input = document.getElementById('numberInput');
+
   // All valid credit card numbers
   const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
   const valid2 = [5, 5, 3, 5, 7, 6, 6, 7, 6, 8, 7, 5, 1, 4, 3, 9];
@@ -39,14 +43,25 @@
     mystery5
   ];
 
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (validateCred(input.value)) {
+      alert('The card number is valid');
+    } else {
+      alert('The card number is invalid');
+    }
+
+  })
+
+  //converts a string into an array of numbers
   function makeArray(string) {
-    return Array.from(string).map(Number);
+    return Array.from((string).replace(/\s+/g, '')).map(Number);
   }
 
+  //checks if the card is valid
   function validateCred(array) {
     let sum = 0;
     if (!Array.isArray(array)) {
-      //converts a string into an array of numbers
       array = makeArray(array);
     }
     for (let i = array.length - 1; i >= 0; i--) {
@@ -62,6 +77,7 @@
     return sum % 10 === 0;
   }
 
+  //finds all the invalid cards and returns an array of its numbers
   function findInvalidCards(array) {
     const invalidCards = [];
     for (let i = 0; i < array.length; i++) {
@@ -71,7 +87,7 @@
     }
     return invalidCards;
   }
-
+  //finds the companies that issued invalid cards and returns its names
   function idInvalidCardCompanies(array) {
     const invalidCardsCompanies = [];
     for (let i = 0; i < array.length; i++) {
